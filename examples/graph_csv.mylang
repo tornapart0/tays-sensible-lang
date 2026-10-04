@@ -1,0 +1,27 @@
+import argparse
+from pathlib import Path
+import pandas as pd
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--csv", default="artifacts/robot_log.csv")
+parser.add_argument("--x", default="time_s")
+parser.add_argument("--y", default="sensor_raw")
+parser.add_argument("--output", default="artifacts/csv_plot.png")
+args = parser.parse_args()
+frame = pd.read_csv(args.csv)
+if args.x not in frame.columns or args.y not in frame.columns
+{
+    raise ValueError("The requested columns are missing from the CSV")
+}
+figure, axis = plt.subplots(figsize=(8, 4))
+frame.plot(x=args.x, y=args.y, ax=axis)
+axis.grid(true, alpha=0.3)
+figure.tight_layout()
+output = Path(args.output)
+output.parent.mkdir(parents=true, exist_ok=true)
+figure.savefig(output, dpi=150)
+plt.close(figure)
+print("Saved", output.resolve())

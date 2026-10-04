@@ -1,0 +1,56 @@
+import argparse
+from pathlib import Path
+import pandas as pd
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from mylang.robot import Robot
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--port", default=null)
+parser.add_argument("--output", default="artifacts")
+parser.add_argument("--adc-pin", dest="adcPin", type=int, default=null)
+parser.add_argument("--left", nargs=3, type=int, default=[4, 5, 6])
+parser.add_argument("--right", nargs=3, type=int, default=[7, 8, 9])
+args = parser.parse_args()
+folder = Path(args.output)
+folder.mkdir(parents=true, exist_ok=true)
+rows = []
+
+with Robot(port=args.port) as robot
+{
+    robot.configureMotors(left=args.left, right=args.right)
+    print("Simulation:", robot.simulated)
+    every 100 ms for 2 s
+    {
+        robot.drive(0.25, 0.25)
+        sample = robot.read()
+        if args.adcPin is not null
+        {
+            sample["sensor_raw"] = robot.analogRead(args.adcPin)
+        }
+        rows.append(sample)
+    }
+    robot.stop()
+}
+
+frame = pd.DataFrame(rows)
+frame.to_csv(folder / "robot_log.csv", index=false)
+figure, axes = plt.subplots(2, 1, figsize=(8, 6), sharex=true)
+frame.plot(x="time_s", y=["left", "right"], ax=axes[0])
+axes[0].set_ylabel("Commanded motor power")
+if frame["sensor_raw"].notna().any()
+{
+    frame.plot(x="time_s", y="sensor_raw", ax=axes[1])
+}
+else
+{
+    axes[1].text(0.5, 0.5, "No ADC configured: use --adc-pin", ha="center", transform=axes[1].transAxes)
+}
+axes[1].set_ylabel("ADC raw / synthetic in simulation")
+axes[1].set_xlabel("Time (seconds)")
+figure.suptitle("ESP32 robot telemetry")
+figure.tight_layout()
+figure.savefig(folder / "robot_plot.png", dpi=150)
+plt.close(figure)
+print("Saved CSV and graph to", folder.resolve())

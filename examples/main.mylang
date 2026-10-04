@@ -1,0 +1,22 @@
+name = "Taylan"
+score = 10
+bonus = 5
+
+print("Hello, " + name)
+print("Your score:", score + bonus)
+
+if score + bonus >= 15
+{
+    print("You passed!")
+}
+else
+{
+    print("Try again")
+}
+
+count = 1
+while count <= 3
+{
+    print("Count:", count)
+    count = count + 1
+}

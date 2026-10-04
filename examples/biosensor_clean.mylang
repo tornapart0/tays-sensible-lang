@@ -1,0 +1,44 @@
+import argparse
+from pathlib import Path
+import matplotlib
+matplotlib.use("Agg")
+from mylang.biosensor import runProject
+
+parser = argparse.ArgumentParser()
+parser.add_argument("filePaths", nargs="*")
+parser.add_argument("--output", default="artifacts/biosensor")
+parser.add_argument("--temp-cutoff", dest="tempCutoff", type=float, default=28)
+parser.add_argument("--interval", default=null)
+parser.add_argument("--jump-multiplier", dest="jumpMultiplier", type=float, default=6)
+parser.add_argument("--max-spike-width", dest="maxSpikeWidth", type=int, default=120)
+parser.add_argument("--min-flat-width", dest="minFlatWidth", type=int, default=4)
+args = parser.parse_args()
+
+filePaths = args.filePaths
+if (len(filePaths) == 0)
+{
+    demoFile = Path(__file__).parent / "data" / "biosensor_demo.csv"
+    filePaths = [str(demoFile)]
+    print("Using synthetic demo data")
+}
+
+outputFolder = Path(args.output)
+results, features, adjustments, notes = runProject(
+    filePaths,
+    outputFile=outputFolder / "cleaned_datasets.xlsx",
+    figureFolder=outputFolder / "figures",
+    tempCutoff=args.tempCutoff,
+    interval=args.interval,
+    jumpMultiplier=args.jumpMultiplier,
+    maxSpikeWidth=args.maxSpikeWidth,
+    minFlatWidth=args.minFlatWidth
+)
+
+for result in results
+{
+    csvFile = outputFolder / (str(result["number"]) + "_cleaned.csv")
+    result["final"].to_csv(csvFile, index=false)
+}
+
+print(adjustments.to_string(index=false))
+print("Graphs:", outputFolder / "figures")

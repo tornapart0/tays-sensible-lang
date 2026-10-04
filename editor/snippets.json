@@ -1,0 +1,24 @@
+{
+  "Timed robot loop": {
+    "prefix": "every",
+    "body": [
+      "every ${1:100} ms for ${2:2} s",
+      "{",
+      "    $0",
+      "}"
+    ],
+    "description": "Run a loop at a fixed cadence for a duration"
+  },
+  "Robot connection": {
+    "prefix": "robot",
+    "body": [
+      "from mylang.robot import Robot",
+      "",
+      "with Robot(${1:}) as robot",
+      "{",
+      "    $0",
+      "}"
+    ],
+    "description": "Simulation by default; stops outputs when the block exits"
+  }
+}

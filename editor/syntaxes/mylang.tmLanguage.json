@@ -1,0 +1,55 @@
+{
+  "scopeName": "source.mylang",
+  "patterns": [
+    {
+      "name": "comment.line.mylang",
+      "match": "(#|//).*$"
+    },
+    {
+      "name": "string.quoted.double.mylang",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.mylang",
+          "match": "\\\\."
+        }
+      ]
+    },
+    {
+      "name": "string.quoted.single.mylang",
+      "begin": "'",
+      "end": "'",
+      "patterns": [
+        {
+          "name": "constant.character.escape.mylang",
+          "match": "\\\\."
+        }
+      ]
+    },
+    {
+      "name": "entity.name.function.mylang",
+      "match": "(?<=def )\\w+"
+    },
+    {
+      "name": "keyword.control.mylang",
+      "match": "\\b(if|elif|else|while|for|in|def|class|return|break|continue|import|from|as|with|try|except|finally|raise|pass|and|or|not|repeat|every)\\b"
+    },
+    {
+      "name": "constant.language.mylang",
+      "match": "\\b(true|false|null|True|False|None)\\b"
+    },
+    {
+      "name": "constant.numeric.mylang",
+      "match": "\\b[0-9]+(?:\\.[0-9]+)?\\b"
+    },
+    {
+      "name": "support.function.mylang",
+      "match": "\\b(print|range|len|Robot|drive|servo|pwm|digital_write|digital_read|analog_read|stop|move|read|configure_motors|release|configureMotors|digitalWrite|digitalRead|analogRead|loadData|cleanNonwear|imputeGaps|cleanSensorJumps|runQualityControls|computeTacFeatures|plotFinalResult|exportResults|runProject)\\b"
+    },
+    {
+      "name": "keyword.other.unit.mylang",
+      "match": "\\b(ms|s)\\b"
+    }
+  ]
+}

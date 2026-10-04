@@ -1,0 +1,41 @@
+{
+  "name": "mylang-syntax",
+  "displayName": "MyLang Robotics Syntax",
+  "description": "Syntax highlighting for brace-style MyLang robotics programs",
+  "version": "0.3.0",
+  "publisher": "local-mylang",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "mylang",
+        "aliases": [
+          "MyLang",
+          "mylang"
+        ],
+        "extensions": [
+          ".mylang"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "mylang",
+        "scopeName": "source.mylang",
+        "path": "./syntaxes/mylang.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "mylang",
+        "path": "./snippets.json"
+      }
+    ]
+  }
+}

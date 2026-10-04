@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mylang-robot-starter"
+version = "0.3.0"
+description = "A brace-style Python language with ESP32-S3 robotics and plotting"
+requires-python = ">=3.10"
+dependencies = ["pandas>=2.2,<4", "matplotlib>=3.9,<4", "pyserial>=3.5,<4", "numpy>=1.26,<3", "openpyxl>=3.1,<4"]
+
+[project.scripts]
+mylang = "interpreter:main"
+
+[tool.setuptools]
+packages = ["mylang"]
+py-modules = ["interpreter"]

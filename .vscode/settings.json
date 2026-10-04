@@ -1,0 +1,11 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/*.egg-info": true
+  },
+  "[mylang]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  }
+}

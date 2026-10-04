@@ -1,0 +1,24 @@
+from pathlib import Path
+import matplotlib
+matplotlib.use("Agg")
+from mylang.biosensor import loadData, cleanNonwear, imputeGaps, cleanSensorJumps
+from mylang.biosensor import computeTacFeatures, plotFinalResult
+
+filePath = Path(__file__).parent / "data" / "biosensor_demo.csv"
+originalData = loadData(filePath)
+cleanedData = cleanNonwear(originalData, tempCutoff=28)
+cleanedData = imputeGaps(cleanedData, interval="1min")
+cleanedData = cleanSensorJumps(cleanedData)
+
+result = {
+    "number": 1,
+    "name": "Synthetic biosensor demo",
+    "original": originalData,
+    "final": cleanedData,
+    "temp_cutoff": 28
+}
+
+features = computeTacFeatures([result])
+graphFile = plotFinalResult(result, "artifacts/biosensor_steps")
+print(features.to_string(index=false))
+print("Saved graph:", graphFile)

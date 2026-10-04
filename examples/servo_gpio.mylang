@@ -1,0 +1,23 @@
+import argparse
+from mylang.robot import Robot
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--port", default=null)
+parser.add_argument("--servo-pin", dest="servoPin", type=int, default=10)
+parser.add_argument("--led-pin", dest="ledPin", type=int, default=11)
+args = parser.parse_args()
+
+with Robot(port=args.port) as robot
+{
+    print("Simulation:", robot.simulated)
+    for angle in [60, 90, 120]
+    {
+        every 100 ms for 500 ms
+        {
+            robot.servo(args.servoPin, angle)
+            robot.digitalWrite(args.ledPin, 1)
+        }
+        print("Servo command:", angle)
+    }
+    robot.stop()
+}
